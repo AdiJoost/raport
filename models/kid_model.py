@@ -1,6 +1,11 @@
 from db import db
 
 class KidModel(db.Model):
+    MONDAY = 0
+    TUESDAY = 1
+    WEDNESDAY = 2
+    THURSDAY = 3
+    FRIDAY = 4
     
     __tablename__ = 'kids'
     id = db.Column(db.Integer, primary_key=True)
@@ -24,7 +29,7 @@ class KidModel(db.Model):
         self.important = important
         
     def to_json (self):
-        return {self.name: {"name" : self.name,
+        return {"name" : self.name,
                             "id": self.id,
                             "parents": self.parents,
                             "present": self.present,
@@ -32,7 +37,10 @@ class KidModel(db.Model):
                             "eating": self.eating,
                             "sleeping": self.sleeping,
                             "spez":self.spez,
-                            "important":self.important}}
+                            "important":self.important}
+    
+    def to_string (self):
+        return f"name: {self.name},\nparents: {self.parents}\npresent:{self.present}"
     
     def save(self):
         db.session.add(self)
@@ -53,3 +61,40 @@ class KidModel(db.Model):
     @classmethod
     def get_all_items(cls):
         return cls.query.all()
+    
+    @classmethod
+    def get_kids_by_day (cls, weekday):
+        searchStatement = cls.get_statement(weekday)
+        return cls.query.filter(cls.present.notlike(searchStatement)).all()
+          
+    #todo let method return correct string for day;
+    @classmethod
+    def get_statement (cls, weekday):
+        if weekday == cls.MONDAY:
+            return "f_____"
+        
+    
+    '''
+    @classmethod
+    def get_all_items_as_json(cls):
+        data = cls.query.all()
+        return_value = {}
+        for kid in data:
+            return_value[kid.name] = kid.to_json()
+        return return_value
+    
+    @classmethod
+    def get_all_items_as_string(cls):
+        data = cls.query.all()
+        return_value = ""
+        for kid in data:
+            return_value += kid.to_string() + "\n"
+        return return_value
+     
+    @classmethod
+    def get_all_items_as_list(cls):
+        data = cls.query.all()
+        return_value = []
+        for kid in data:
+            return_value.append(kid.to_string())
+        return return_value'''

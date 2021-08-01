@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="de">
+
+
+<head>
+  <meta charset="utf-8">
+  <title>Kinderinfo</title>
+  <script type="text/javascript" src="{{url_for('static',filename='add_kid.js')}}"></script>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/ex_style.css')}}"
+  </head>
+
+  <body>
+
+    <nav>
+      <span class="navTitle">Adi's Organizatoor2000</span>
+      <a href="http://192.168.1.120:5000/home"><span class="addKid">Startseite</span></a>
+    </nav>
+
+    <div class="content" class="addKidContent">
+      <h1>Kind hinzufügen:</h1>
+
+      <div class="box_addKid">
+        <label for="nameInput">Name:</label>
+        <input type="text" id="nameInput" name="nameInput" class="singleRowInput"/>
+        <br><br>
+
+        <label for="parentsInput">Eltern:</label>
+        <input type="text" id="parentsInput" name="parentsInput" class="singleRowInput"/>
+        <br><br>
+
+        <label for="presentsInput">AnwesenheitsCode:</label>
+        <input type="text" id="presentsInput" name="presentsInput" class="singleRowInput"/>
+        <br><br>
+
+        <label for="birthdayInput">Geburtstag:</label>
+        <input type="text" id="birthdayInput" name="birthdayInput" class="singleRowInput"/>
+        <br><br>
+
+        <label for="eatingInput">Essen:</label>
+        <br>
+        <textarea id="eatingInput" name="eatingInput" rows="4" cols="50"></TEXTAREA>
+        <br><br>
+
+        <label for="sleepingInput">Schlafen:</label>
+        <br>
+        <textarea id="sleepingInput" name="sleepingInput" rows="4" cols="50"></TEXTAREA>
+        <br><br>
+
+        <label for="spezInput">Speziell:</label>
+        <br>
+        <textarea id="spezInput" name="spezInput" rows="4" cols="50"></TEXTAREA>
+        <br><br>
+
+        <label for="importantInput">Wichtig:</label>
+        <br>
+        <textarea id="importantInput" name="importantInput" rows="4" cols="50"></TEXTAREA>
+        <br><br><br>
+
+        <BUTTON type="button" id="btnAddKid">Kind hinzufügen</BUTTON>
+        
+      </div>
+
+  </div>
+
+
+    </body>
+
+</html>
