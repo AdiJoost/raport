@@ -31,6 +31,10 @@ def home():
 def addKid():
     return render_template("add_kid.html")
 
+@app.route('/editKid/<string:_id>')
+def editKid(_id):
+    return render_template("edit_kid.html", data={"id": _id})
+
 
 api.add_resource(UserRegister, '/register')
 api.add_resource(Kid, '/kid/<string:name>')

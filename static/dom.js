@@ -1,3 +1,5 @@
+let url = "http://192.168.1.120:5000";
+
 function getAllKids(){
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", "http://192.168.1.120:5000/kids", false);
@@ -14,10 +16,50 @@ function getAllKidsByFetch(){
 	
 }
 
+function getKidsByDay(){
+	let date = document.getElementById('filterDate').value;
+	let fullUrl = url + "/kids/" + date
+	fetch(fullUrl)
+	.then(response => {
+		if (!response.ok){
+			loadingError(response);
+			throw new Error("Server didn't like request");
+		}
+		console.log("turn response.json");
+		return response.json();
+		
+	})
+	.then(body => gotBody(body));
+}
+
 function gotBody(body){
+	console.log(body);
+	clearKidsInfo();
 	for (kid in body){
 		setElement(body[kid]);
 	}
+}
+
+function loadingError(response){
+	let body = response.json().then(function(object){
+		clearKidsInfo();
+		let message = document.createElement("h2")
+		message.innerText = response.status + ": " + object.message;
+
+		let errorMessage = document.createElement("div")
+		errorMessage.className = "kid_box"
+		errorMessage.appendChild(message);
+
+		let container = document.getElementById('kinderinfo');
+		container.appendChild(errorMessage);
+	});
+	
+}
+
+
+function clearKidsInfo(){
+	let kidsInfo = document.getElementById('kinderinfo');
+	kidsInfo.innerText = "";
 }
 /*
 var HttpClient = function() {
@@ -55,27 +97,40 @@ function setElement(kid){
 function setKid(kid){
 	let newKid = document.createElement("div");
 
-	let name = document.createElement("h2");
-	name.innerText = kid["name"];
-	newKid.appendChild(name);
+		let titleNav = document.createElement("div");
+			let name = document.createElement("h2");
+			name.innerText = kid["name"];
+			name.style.display = "inline";
+			titleNav.appendChild(name);
 
-	let birthday = setRow("Birthday", "h3", kid["birthday"], "p");
-	newKid.appendChild(birthday);
+			let editLink = document.createElement("a");
+			editLink.href = url + "/editKid/" + kid["id"];
+				let icon = document.createElement("span")
+				icon.className = "icon";
+				icon.innerText = "Edit";
+				
+				editLink.appendChild(icon);
+			titleNav.appendChild(editLink);
 
-	let eating = setRow("Essen", "h3", kid["eating"], "p");
-	newKid.appendChild(eating);
+		newKid.appendChild(titleNav);
 
-	let sleeping = setRow("Schlafen", "h3", kid["sleeping"], "p");
-	newKid.appendChild(sleeping);
+		let birthday = setRow("Birthday", "h3", kid["birthday"], "p");
+		newKid.appendChild(birthday);
 
-	let parents = setRow("Eltern", "h3", kid["parents"], "p");
-	newKid.appendChild(parents);
+		let eating = setRow("Essen", "h3", kid["eating"], "p");
+		newKid.appendChild(eating);
 
-	let important = setRow("Wichtig", "h3", kid["important"], "p");
-	newKid.appendChild(important);
+		let sleeping = setRow("Schlafen", "h3", kid["sleeping"], "p");
+		newKid.appendChild(sleeping);
 
-	let spez = setRow("Speziell:", "h3", kid["spez"], "p");
-	newKid.appendChild(spez);
+		let parents = setRow("Eltern", "h3", kid["parents"], "p");
+		newKid.appendChild(parents);
+
+		let important = setRow("Wichtig", "h3", kid["important"], "p");
+		newKid.appendChild(important);
+
+		let spez = setRow("Speziell:", "h3", kid["spez"], "p");
+		newKid.appendChild(spez);
 
 	return newKid;
 }
@@ -91,6 +146,13 @@ function setRow(title, title_type, text, text_type){
 	return return_paragraph;
 }
 
+function setView(){
+	let filterButton = document.getElementById('btnFilterDate');
+	filterButton.addEventListener("click", function(){
+		getKidsByDay();
+	}, false);
+}
+
 window.addEventListener("load", function(){
 	getAllKidsByFetch();
 	/*let kids_raw = getAllKids();
@@ -98,5 +160,6 @@ window.addEventListener("load", function(){
 	for (kid in kids){
 		setElement(kids[kid]);
 	}*/
+	setView();
 	
 }, false)

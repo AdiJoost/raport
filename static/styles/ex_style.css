@@ -59,8 +59,16 @@ nav {
 	float: right;
 }
 
+
 .box_addKid{
 	width: 500px;
 	margin: auto;
 	
 }
+
+.icon {
+	height: 30px;
+	width: auto;
+	float: right;
+}
+

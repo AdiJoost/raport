@@ -1,4 +1,5 @@
 from db import db
+import datetime
 
 class KidModel(db.Model):
     MONDAY = 0
@@ -46,7 +47,7 @@ class KidModel(db.Model):
         db.session.add(self)
         db.session.commit()
         
-    def delete(self):
+    def deleteMe(self):
         db.session.delete(self)
         db.session.commit()
         
@@ -71,7 +72,52 @@ class KidModel(db.Model):
     @classmethod
     def get_statement (cls, weekday):
         if weekday == cls.MONDAY:
-            return "f_____"
+            return "f____"
+        if weekday == cls.TUESDAY:
+            return "_f___"
+        if weekday == cls.WEDNESDAY:
+            return "__f__"
+        if weekday == cls.THURSDAY:
+            return "___f_"
+        if weekday == cls.FRIDAY:
+            return "____f"
+        return "fffff"
+    
+    @classmethod
+    def update_kid (cls, kid, data):
+        kid.parents = data["parents"]
+        kid.present = data["present"]
+        kid.eating = data["eating"]
+        kid.sleeping = data["sleeping"]
+        kid.spez = data["spez"]
+        kid.important = data["important"]
+        returnMessage = "";
+        if kid.name != data["name"]:
+            if cls.exists_name(data["name"]):
+                returnMessage += "--The new name already existed in DB, therefor old name still in use!--"
+            else:
+                kid.name = data["name"]
+        date, state = cls.get_date(data["birthday"])
+        if state:
+            kid.birthday = date
+        else:
+            returnMessage += "--The given Birthday is invalid form. Use format yyyy-MM-dd, therefore old birthday still in use!--"
+        kid.save()
+        returnMessage += "--Kid updated--"
+        return returnMessage, 200
+    
+    @classmethod
+    def get_date(cls, string):
+        try:
+            year = int(string[0:4])
+            month = int(string[5:7])
+            day = int(string[8:])
+            date = datetime.datetime(year, month, day)
+            return date, True
+        except:
+            return None, False
+        
+            
         
     
     '''
