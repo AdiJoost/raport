@@ -114,8 +114,21 @@ function setKid(kid){
 
 		newKid.appendChild(titleNav);
 
-		let birthday = setRow("Birthday", "h3", kid["birthday"], "p");
-		newKid.appendChild(birthday);
+		let presentsDisplay = document.createElement("div");
+			let presentTitle = document.createElement("h3");
+			presentTitle.innerText = "Anwesenheit";
+			presentsDisplay.appendChild(presentTitle);
+
+			let morningBox = getPresentsBox(kid, 0);
+			presentsDisplay.appendChild(morningBox);
+
+			let lunchBox = getPresentsBox(kid, 1);
+			presentsDisplay.appendChild(lunchBox);
+
+			let afternoonBox = getPresentsBox(kid, 2);
+			presentsDisplay.appendChild(afternoonBox, 2);
+
+		newKid.appendChild(presentsDisplay)
 
 		let eating = setRow("Essen", "h3", kid["eating"], "p");
 		newKid.appendChild(eating);
@@ -131,6 +144,9 @@ function setKid(kid){
 
 		let spez = setRow("Speziell:", "h3", kid["spez"], "p");
 		newKid.appendChild(spez);
+
+		let birthday = setRow("Birthday", "h3", kid["birthday"], "p");
+		newKid.appendChild(birthday);
 
 	return newKid;
 }
@@ -163,3 +179,68 @@ window.addEventListener("load", function(){
 	setView();
 	
 }, false)
+
+
+/*
+Returns Box indicating if Kid is pressent in that sector.
+0 = morning, 1=lunch, 2=afternoon
+*/
+function getPresentsBox(kid, sector){
+	let box = document.createElement("div");
+	
+	box.classList.add("presentBox");
+	if (isPresent(kid, sector)){
+		box.classList.add("isHere");
+	}
+	return box;
+}
+
+function isPresent(kid, sector){
+	let day = new Date(document.getElementById('filterDate').value);
+	let dayOfWeek = 0;
+	if (!isNaN(day.getTime())){
+		dayOfWeek = day.getDay();
+		console.log("Valid Date");
+	} else {
+		day = new Date();
+		console.log("Invalid Date");
+		dayOfWeek = day.getDay();
+	}
+	console.log("DayOfWeek: " + dayOfWeek);
+	//wenn zuviel Zeit: Durch switch-Statement ersetzen
+	let roi = "f";
+	if(dayOfWeek == 1){
+		roi = kid["present"].slice(0, 1);
+	} else if (dayOfWeek == 2){
+		roi = kid["present"].slice(1, 2);
+	} else if (dayOfWeek == 3){
+		roi = kid["present"].slice(2, 3);
+	} else if (dayOfWeek == 4){
+		roi = kid["present"].slice(3, 4);
+	} else if (dayOfWeek == 5){
+		roi = kid["present"].slice(4, 5);
+	}
+	console.log(kid["name"] + ": dayOfWeek: " + dayOfWeek + " Sector: " + sector + " roi: " + roi);
+
+	switch(sector){
+		case 0:
+			if (roi == "a" || roi == "b" || roi == "c"){
+				return true;
+			}
+			break;
+		
+		case 1:
+			if (roi == "a" || roi =="b" || roi =="d"){
+				return true;
+			}
+			break;
+		case 2:
+			if (roi == "a" || roi == "d" || roi == "e"){
+				return true;
+			}
+			break;
+	}
+
+	return false;
+
+}

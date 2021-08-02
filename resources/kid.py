@@ -14,7 +14,9 @@ class KidsByDay(Resource):
         return_value = {}
         for kid in kids:
             return_value[kid.id] = kid.to_json()
-        return return_value;
+        response = flask.jsonify(return_value)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
         
 
 class Kids(Resource):

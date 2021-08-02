@@ -31,6 +31,27 @@ function setupButton(){
 		let body = getBody();
 		sendPost(body);
 	}, false);
+
+	let btnDelete = document.getElementById('deleteKid');
+	btnDelete.addEventListener("click", function(){
+		if (confirm('Möchtest du das Kind wirklich aus der Datenbank entfernen? Daten werden entgültig gelöscht')){
+			deleteKid();
+		}
+		
+	}, false);
+}
+
+function deleteKid(){
+	let url = baseUrl + "/kid/" + data["id"];
+	fetch (url, {
+		method: "DELETE"
+	}).then(response => {
+		let obj = response.json()
+		.then(function(object){
+			alert(response.status +": " + object.message);
+			window.location.href = baseUrl + "/home";
+			})
+	})
 }
 
 //returns Body from Form to send in POST method || Body is Json
