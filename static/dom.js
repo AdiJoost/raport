@@ -25,7 +25,7 @@ function getKidsByDay(){
 			loadingError(response);
 			throw new Error("Server didn't like request");
 		}
-		console.log("turn response.json");
+		console.log(response);
 		return response.json();
 		
 	})

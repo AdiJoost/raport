@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
 from models.kid_model import KidModel
+from flask import make_response
 import datetime
 import flask
 
@@ -9,7 +10,11 @@ class KidsByDay(Resource):
     def get(self, dayString):
         date, state = Kid.get_date(dayString)
         if not state:
-            return {"message": "Invalid date: {} \nUse format: yyyy-MM-dd\n\tfor Example: 2020-12-27".format(dayString)}, 400
+            response =  make_response(flask.jsonify(
+                {"message": "Invalid date: {} \nUse format: yyyy-MM-dd\n\tfor Example: 2020-12-27".format(dayString)}), 
+                400)
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
         kids = KidModel.get_kids_by_day(date.weekday())
         return_value = {}
         for kid in kids:
