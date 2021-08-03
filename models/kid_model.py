@@ -86,22 +86,32 @@ class KidModel(db.Model):
     @classmethod
     def update_kid (cls, kid, data):
         kid.parents = data["parents"]
-        kid.present = data["present"]
         kid.eating = data["eating"]
         kid.sleeping = data["sleeping"]
         kid.spez = data["spez"]
         kid.important = data["important"]
         returnMessage = "";
+        #check if name is valid
         if kid.name != data["name"]:
             if cls.exists_name(data["name"]):
                 returnMessage += "--The new name already existed in DB, therefor old name still in use!--"
+            elif kid.name.isdigit():
+                returnMessage += "--The new name is a number. Numbers are not allowed as Names (As per definition, Humans have a right for a name, not a Number!), therefor old name still in use!--"
             else:
                 kid.name = data["name"]
+                
+        #check if birthday is valid
         date, state = cls.get_date(data["birthday"])
         if state:
             kid.birthday = date
         else:
             returnMessage += "--The given Birthday is invalid form. Use format yyyy-MM-dd, therefore old birthday still in use!--"
+            
+        #check if presents is valid
+        if KidModel.presents_valid(data["present"]):
+            kid.present = data["present"]
+        else:
+            returnMessage += "--The given presents of the kid is in wrong format(presents has to be in 5 letters), therefore old presents still in use!--"
         kid.save()
         returnMessage += "--Kid updated--"
         return returnMessage, 200
@@ -116,6 +126,13 @@ class KidModel(db.Model):
             return date, True
         except:
             return None, False
+        
+    @classmethod
+    def presents_valid(cls, present):
+        if len(present) == 5:
+            return True;
+        else:
+            return False;
         
             
         

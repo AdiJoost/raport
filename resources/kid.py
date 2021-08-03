@@ -91,18 +91,21 @@ class Kid(Resource):
             return {"message": "The Name of the Kid is not aloud to be a number!"}, 400
         
         date, state = Kid.get_date(data["birthday"])
-        if state:
-            kid = KidModel(data["name"],
-                      data["parents"],
+        if not state:
+            return {"message": "Coudn't assign Birthday"}, 400
+        if not KidModel.presents_valid(data["present"]):
+            return {"message": "Format of presents is wrong. It needs to have exactly 5 letters!"}, 400
+        kid = KidModel(data["name"],
+                       data["parents"],
                       data["present"],
                       date,
                       data["eating"],
                       data["sleeping"],
                       data["spez"],
                       data["important"])
-            kid.save()
-            return kid.to_json(), 201
-        return {"message": "Coudn't assign Birthday"}, 400
+        kid.save()
+        return kid.to_json(), 201
+        
         
     
     def delete(self, name):
