@@ -20,7 +20,7 @@ class KidsByDay(Resource):
         for kid in kids:
             return_value[kid.id] = kid.to_json()
         response = flask.jsonify(return_value)
-        response.headers.add('Access-Control-Allow-Origin', 'http://127..0.1:5000')
+        response.headers.add('Access-Control-Allow-Origin', 'http://127.0.0.1:5000')
         return response
         
 
@@ -31,7 +31,7 @@ class Kids(Resource):
         for kid in kids:
             return_value[kid.id] = kid.to_json()
         response = flask.jsonify(return_value)
-        response.headers.add('Access-Control-Allow-Origin', 'http://127..0.1:5000')
+        response.headers.add('Access-Control-Allow-Origin', 'http://127.0.0.1:5000')
         return response
 
 class Kid(Resource):
