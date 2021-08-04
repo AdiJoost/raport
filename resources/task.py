@@ -7,18 +7,23 @@ import flask
 
 class Task(Resource):
     def get(self, name):
-        parser = Task.get_get_parser()
-        data = parser.parse_args()
-        task = TaskModel.get_by_name(data["name"])
         return_value = {"message": ""}
+        task = TaskModel.get_by_id(name)
         if task:
             return_value["task"] = task.to_json()
             return_value["message"] = "Got a Task!"
+            return Task.create_response(return_value, 200)
+        
+        task = TaskModel.get_by_name(name)
+        if task:
+            return_value["task"] = task.to_json()
+            return_value["message"] = "Got a Task! But it's better practise to call tasks with their id! Maybe another Task with that name exists :/"
+            return Task.create_response(return_value, 200)
         else:
             return_value["message"] = "No task found"
-        response = flask.jsonify(return_value)
-        response.headers.add('Access-Control-Allow-Origin', 'http://127.0.0.1:5000')
-        return response
+        return Task.create_response(return_value, 400)
+        
+        
     
     def post(self, name):
         parser = Task.get_post_parser()
