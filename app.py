@@ -35,6 +35,9 @@ def addKid():
 def editKid(_id):
     return render_template("edit_kid.html", data={"id": _id})
 
+@app.route('/tasks')
+def tasks():
+    return render_template("tasks.html")
 
 api.add_resource(UserRegister, '/register')
 api.add_resource(Kid, '/kid/<string:name>')
