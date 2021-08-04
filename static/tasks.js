@@ -21,6 +21,7 @@ function displayTask(task){
 	console.log(task);
 	let tasks = document.getElementById("tasks");
 		let container = document.createElement("div");
+		container.classList.add(getClass(task["status"]));
 		container.classList.add("task");
 			let name = document.createElement("h2");
 			name.innerText = task["name"];
@@ -38,6 +39,21 @@ function displayTask(task){
 
 }
 
+function getClass(status){
+	switch(status){
+		case 1:
+			return "toDo";
+		case 2:
+			return "worked_on";
+		case 3:
+			return "done";
+		case 4:
+			return "error";
+		default:
+			return "_default"
+	}
+}
+
 function getKidsByDay(){
 	let date = document.getElementById('filterDate').value;
 	let fullUrl = url + "/kids/" + date
@@ -53,6 +69,7 @@ function getKidsByDay(){
 	})
 	.then(body => gotBody(body));
 }
+
 
 
 

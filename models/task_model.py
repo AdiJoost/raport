@@ -9,6 +9,8 @@ class TaskModel(db.Model):
     
     __tablename__ = "tasks"
     
+    
+    
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
     description = db.Column(db.String())
@@ -17,6 +19,8 @@ class TaskModel(db.Model):
     initialized = db.Column(db.Date())
     done = db.Column(db.Date())
     time_used = db.Column(db.Integer())
+    
+    
     
     def __init__ (self, name, description, due, initialized):
         self.name = name
@@ -58,7 +62,7 @@ class TaskModel(db.Model):
     
     @classmethod
     def get_all(cls):
-        return cls.query.all()
+        return cls.query.order_by(TaskModel.status).all()
     
     @classmethod
     def get_date(cls, string):
