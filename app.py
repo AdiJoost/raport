@@ -5,7 +5,7 @@ from security import authenticate, identity
 from resources.user import UserRegister
 from resources.kid import Kid, Kids, KidsByDay
 from db import db
-from models.kid_model import KidModel
+from resources.task import Task
 
 
 app = Flask(__name__)
@@ -40,6 +40,7 @@ api.add_resource(UserRegister, '/register')
 api.add_resource(Kid, '/kid/<string:name>')
 api.add_resource(Kids, '/kids')
 api.add_resource(KidsByDay, '/kids/<string:dayString>')
+api.add_resource(Task, '/task/<string:name>')
 
 if __name__ == "__main__":
     db.init_app(app)
