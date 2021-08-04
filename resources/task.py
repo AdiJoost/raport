@@ -2,7 +2,6 @@ from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
 from models.task_model import TaskModel
 from flask import make_response
-from datetime import date
 import flask
 
 class Task(Resource):
@@ -47,10 +46,64 @@ class Task(Resource):
         
     
     def put(self, name):
-        pass
+        task = TaskModel.get_by_id(name)
+        return_value = {"message": ""}
+        if not task:
+            return_value["message"] = "No Task found with given ID"
+            return Task.create_response(return_value, 400)
+        parser = Task.get_put_parser()
+        data = parser.parse_args()
+        #if bored create function or better, make set-functions and a mainfunction in TaskModel
+        if data["name"]:
+            task.name = data["name"]
+            return_value["message"] = return_value["message"] + "Name edited\n"
+        if data["description"]:
+            task.description = data["description"]
+            return_value["message"] = return_value["message"] + "description edited\n"
+        if data["due"]:
+            date, state = TaskModel.get_date(data["due"])
+            if state:
+                task.due = date
+                return_value["message"] = return_value["message"] + "due edited\n"
+            else:
+                return_value["message"] = return_value["message"] + "couldn't assigne date for due, old date still in use \n"
+        if data["initialized"]:
+            date, state = TaskModel.get_date(data["initialized"])
+            if state:
+                task.initialized = date
+                return_value["message"] = return_value["message"] + "initialized edited\n"
+            else:
+                return_value["message"] = return_value["message"] + "couldn't assigne date for initialized, old date still in use \n"
+        if data["done"]:
+            date, state = TaskModel.get_date(data["done"])
+            if state:
+                task.done = date
+                return_value["message"] = return_value["message"] + "done edited\n"
+            else:
+                return_value["message"] = return_value["message"] + "couldn't assigne done for initialized, old date still in use \n"
+        if data["status"]:
+            task.name = data["status"]
+            return_value["message"] = return_value["message"] + "status edited\n"
+        if data["time_used"]:
+            task.name = data["time_used"]
+            return_value["message"] = return_value["message"] + "time_used edited\n"
+        task.save()
+        return make_response(return_value, 200)
+        
+        
+            
     
     def delete(self, name):
-        pass
+        task = TaskModel.get_by_id(name)
+        return_value = {"message": ""}
+        if task:
+            task.deleteMe()
+            return_value["message"] = "Task deleted"
+        else:
+            return_value["message"] = "There was no Task with ID: {} to begin with".format(name)
+        return Task.create_response(return_value, 200)
+        
+    
     
     @classmethod
     def get_get_parser(cls):
@@ -81,6 +134,29 @@ class Task(Resource):
                             required=True,
                             help="This field cannot be left blank. Put -1 for today.")
         
+        return parser
+    
+    @classmethod
+    def get_put_parser(cls):
+        parser = reqparse.RequestParser()
+        parser.add_argument("name",
+                            type=str,
+                            help="This field cannot be left blank")
+        parser.add_argument("description",
+                            type=str,
+                            help="This field cannot be left blank")
+        parser.add_argument("due",
+                            type=str,
+                            help="This field cannot be left blank. Formmat: yyyy-MM-dd")
+        parser.add_argument("initialized",
+                            type=str,
+                            help="This field cannot be left blank. Put -1 for today.")
+        parser.add_argument("status",
+                            type=int)
+        parser.add_argument("done",
+                            type=str)
+        parser.add_argument("time_used",
+                            type=int)
         return parser
     
     @classmethod
