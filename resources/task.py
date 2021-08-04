@@ -95,10 +95,10 @@ class Task(Resource):
             else:
                 return_value["message"] = return_value["message"] + "couldn't assigne done for initialized, old date still in use \n"
         if data["status"]:
-            task.name = data["status"]
+            task.status = data["status"]
             return_value["message"] = return_value["message"] + "status edited\n"
         if data["time_used"]:
-            task.name = data["time_used"]
+            task.time_used = data["time_used"]
             return_value["message"] = return_value["message"] + "time_used edited\n"
         task.save()
         return make_response(return_value, 200)
