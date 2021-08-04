@@ -4,6 +4,19 @@ from models.task_model import TaskModel
 from flask import make_response
 import flask
 
+class Tasks(Resource):
+    def get(self, param):
+        if param == "due":
+            pass
+        if param == "status":
+            pass
+        tasks = TaskModel.get_all()
+        return_value = {}
+        for task in tasks:
+            return_value[task.id] = task.to_json()
+        return Task.create_response(return_value, 200)
+        
+
 class Task(Resource):
     def get(self, name):
         return_value = {"message": ""}
