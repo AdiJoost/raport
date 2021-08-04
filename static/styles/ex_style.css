@@ -85,3 +85,19 @@ nav {
 	background-color: #2133E3;
 }
 
+.task {
+	background-color: #B3B3F9;
+	border: 10px solid #8080B3;
+	display: inline-block;
+	border-radius: 5px;
+  	margin: 30px;
+  	width: auto;
+  	height: auto;
+  	padding: 30px;	
+}
+
+.task .description {
+	background-color: #FFF;
+	max-width: 200px;
+	margin: auto;
+}
