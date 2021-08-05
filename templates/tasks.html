@@ -12,7 +12,7 @@
 
   <body>
 
-    <nav>
+    <nav class="topNav">
       <span class="navTitle">Adi's Organizatoor2000</span>
       <a href="http://192.168.1.120:5000/tasks"><span class="addKid">Tasks</span></a>
       <a href="http://192.168.1.120:5000/addKid"><span class="addKid">Kind hinzufuegen</span></a> 
@@ -21,7 +21,12 @@
 
     <div class="content">
       <h1>Tasks:</h1>
-
+      <nav class="subnav tasknav">
+        <nav class="checkbox-nav">
+          <label for="cb_todo">Todo</label>
+          <input type="checkbox" id="cb_todo" name="cb_todo">
+        </nav>
+      </nav>
       <input type="text" id="filterDate" name="filterDate" class="dateInput"/>
       <button type="button" id="btnFilterDate">Nach Datum filtern</button>
       <br><br>

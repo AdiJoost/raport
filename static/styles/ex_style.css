@@ -17,6 +17,10 @@ h1 {
 }
 
 nav {
+	
+}
+
+.topNav {
 	width: 100%;
 	height: auto;
 	padding: 30px;
@@ -27,7 +31,6 @@ nav {
 	position: fixed;
 	z-index: 99;
 }
-
 
 .kid_box {
   background-color: #7cf2ad;

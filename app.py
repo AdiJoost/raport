@@ -24,7 +24,6 @@ def create_table():
     
 @app.route('/home', methods=['GET'])
 def home():
-    
     return render_template("external_css.html")
 
 @app.route('/addKid', methods=['GET'])
@@ -38,6 +37,7 @@ def editKid(_id):
 @app.route('/tasks')
 def taskes():
     return render_template("tasks.html")
+
 
 api.add_resource(UserRegister, '/register')
 api.add_resource(Kid, '/kid/<string:name>')
