@@ -1,5 +1,5 @@
 let baseUrl = "http://192.168.1.120:5000";
-
+let posibleStati = 4;
 
 
 function getAllTasks(){
@@ -12,19 +12,28 @@ function getAllTasks(){
 }
 
 function getTasks(){
+	let gotOne = false;
 	if (document.getElementById('cb_todo').checked){
 		getTasksByStatus(1);
+		gotOne = true;
 	}
 	if (document.getElementById('cb_worked_on').checked){
 		getTasksByStatus(2);
+		gotOne = true;
 	}
 	if (document.getElementById('cb_done').checked){
 		getTasksByStatus(3);
+		gotOne = true;
 	}
 	if (document.getElementById('cb_error').checked){
 		getTasksByStatus(4);
+		gotOne = true;
+	}
+	if (!gotOne){
+		getAllTasks();
 	}
 }
+
 
 function getTasksByStatus(status){
 	let url = baseUrl + "/tasks/status";
@@ -47,7 +56,7 @@ function gotBody(body){
 }
 
 function displayTask(task){
-	let tasks = document.getElementById("tasks");
+	let tasks = document.getElementById("tasks" + task["status"]);
 		let container = document.createElement("div");
 		container.classList.add(getClass(task["status"]));
 		container.classList.add("task");
@@ -96,7 +105,18 @@ function displayTask(task){
 }
 
 function taskUpdate(task, status){
-	console.log("done clicked: " + task["name"]);
+	url = baseUrl + "/task/" + task["id"];
+	fetch(url, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({"status": status})
+	})
+	.then(response => {
+		clearTasks();
+		getTasks();
+	});
 }
 
 function getClass(status){
@@ -130,8 +150,11 @@ function getKidsByDay(){
 }
 
 function clearTasks(){
-	let tasks = document.getElementById('tasks');
-	tasks.innerText = "";
+	for (let i = 1; i <= posibleStati; i++){
+		let tasks = document.getElementById('tasks' + i);
+		tasks.innerText = "";
+	}
+	
 }
 
 function setupButtons(){
