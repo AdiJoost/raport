@@ -41,6 +41,7 @@ nav {
   border: 10px solid #1C6C29;
   border-radius: 5px;
   margin: 30px;
+  position: relative;
   display: inline-block;
 }
 
@@ -86,11 +87,18 @@ nav {
 	
 }
 
+.kidTitleNav {
+	text-align: center;
+	position: relative;
+}
+/*
 .icon {
 	height: 30px;
 	width: auto;
 	float: right;
-}
+	position: absolute;
+	top: 50%;
+}*/
 
 .presentBox{
 	width: 40px;
@@ -105,7 +113,17 @@ nav {
 	background-color: #2133E3;
 }
 
+.icon_container{
+	position: absolute;
+	top: 3px;
+	right: 3px;
+}
+
 .icon {
+	height: 50%;
+	max-height: 20px;
+	
+	
 	padding: 12px 12px;
 	cursor: pointer;
 	background-color: rgba(0,0,0,0.1);

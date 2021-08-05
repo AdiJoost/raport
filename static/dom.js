@@ -74,22 +74,26 @@ function setElement(kid){
 function setKid(kid){
 	let newKid = document.createElement("div");
 
+		let editLink = document.createElement("a");
+		editLink.classList.add("icon_container");
+			editLink.href = url + "/editKid/" + kid["id"];
+				let icon = document.createElement("img")
+				icon.className = "icon";
+				icon.setAttribute("src", url + "/static/icon/draw.png");
+				editLink.appendChild(icon);
+		newKid.appendChild(editLink);
+
 		let titleNav = document.createElement("div");
+		titleNav.classList.add("kidTitleNav");
 			let name = document.createElement("h2");
 			name.innerText = kid["name"];
 			name.style.display = "inline";
 			titleNav.appendChild(name);
 
-			let editLink = document.createElement("a");
-			editLink.href = url + "/editKid/" + kid["id"];
-				let icon = document.createElement("img")
-				icon.className = "icon";
-				icon.setAttribute("src", url + "/static/icon/draw.png");
-				
-				editLink.appendChild(icon);
-			titleNav.appendChild(editLink);
 
 		newKid.appendChild(titleNav);
+
+
 
 		let presentsDisplay = document.createElement("div");
 			let presentTitle = document.createElement("h3");
