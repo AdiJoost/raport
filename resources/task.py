@@ -5,7 +5,14 @@ from flask import make_response
 import flask
 
 class Tasks(Resource):
-    def get(self, param):
+    def get(self, param):         
+        tasks = TaskModel.get_all()
+        return_value = {}
+        for task in tasks:
+            return_value[task.id] = task.to_json()
+        return Task.create_response(return_value, 200)
+    
+    def post (self, param):
         if param == "due":
             pass
         elif param == "status":
@@ -18,7 +25,6 @@ class Tasks(Resource):
         for task in tasks:
             return_value[task.id] = task.to_json()
         return Task.create_response(return_value, 200)
-        
 
 class Task(Resource):
     def get(self, name):

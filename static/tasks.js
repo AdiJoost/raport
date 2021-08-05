@@ -1,28 +1,84 @@
-let url = "http://192.168.1.120:5000";
+let baseUrl = "http://192.168.1.120:5000";
 
 
 
 function getAllTasks(){
 	let thisBody = null;
-	fetch("http://192.168.1.120:5000/tasks/all")
+	let url = baseUrl + "/tasks/all";
+	fetch(url)
+	.then(response => response.json())
+	.then(body => gotBody(body));
+	
+}
+
+function getTasks(){
+	if (document.getElementById('cb_todo').checked){
+		getTasksByStatus(1);
+	}
+	if (document.getElementById('cb_worked_on').checked){
+		getTasksByStatus(2);
+	}
+	if (document.getElementById('cb_done').checked){
+		getTasksByStatus(3);
+	}
+	if (document.getElementById('cb_error').checked){
+		getTasksByStatus(4);
+	}
+}
+
+function getTasksByStatus(status){
+	let url = baseUrl + "/tasks/status";
+	fetch(url, {
+		method: "POST",
+		headers: {
+		"Content-Type": "application/json"
+		},
+		body: JSON.stringify({"status": status})
+	})
 	.then(response => response.json())
 	.then(body => gotBody(body));
 	
 }
 
 function gotBody(body){
-	console.log(body);
 	for (task in body){
 		displayTask(body[task]);
 	}
 }
 
 function displayTask(task){
-	console.log(task);
 	let tasks = document.getElementById("tasks");
 		let container = document.createElement("div");
 		container.classList.add(getClass(task["status"]));
 		container.classList.add("task");
+			let done = document.createElement("div");
+			done.classList.add("btnDone");
+			done.addEventListener("click", function(){
+				taskUpdate(task, 3);
+			}, false);
+			container.appendChild(done);
+
+			let open = document.createElement("div");
+			open.classList.add("btnOpen");
+			open.addEventListener("click", function(){
+				taskUpdate(task, 1);
+			}, false);
+			container.appendChild(open);
+
+			let worked_on = document.createElement("div");
+			worked_on.classList.add("btnWorked_on");
+			worked_on.addEventListener("click", function(){
+				taskUpdate(task, 2);
+			}, false);
+			container.appendChild(worked_on);
+
+			let errorTask = document.createElement("div");
+			errorTask.classList.add("btnErrorTask");
+			errorTask.addEventListener("click", function(){
+				taskUpdate(task, 4);
+			}, false);
+			container.appendChild(errorTask);
+
 			let name = document.createElement("h2");
 			name.innerText = task["name"];
 			container.appendChild(name);
@@ -37,6 +93,10 @@ function displayTask(task){
 			container.appendChild(description);
 		tasks.appendChild(container);
 
+}
+
+function taskUpdate(task, status){
+	console.log("done clicked: " + task["name"]);
 }
 
 function getClass(status){
@@ -63,14 +123,24 @@ function getKidsByDay(){
 			loadingError(response);
 			throw new Error("Server didn't like request");
 		}
-		console.log(response);
 		return response.json();
 		
 	})
 	.then(body => gotBody(body));
 }
 
+function clearTasks(){
+	let tasks = document.getElementById('tasks');
+	tasks.innerText = "";
+}
 
+function setupButtons(){
+	let filterButton = document.getElementById('btnApplyFilter');
+	filterButton.addEventListener("click", function(){
+		clearTasks();
+		getTasks();
+	}, false);
+}
 
 
 
@@ -78,6 +148,7 @@ function getKidsByDay(){
 
 window.addEventListener("load", function(){
 	getAllTasks();
+	setupButtons();
 	
 }, false)
 
