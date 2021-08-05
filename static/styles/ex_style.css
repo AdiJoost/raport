@@ -33,12 +33,12 @@ nav {
 }
 
 .kid_box {
-  background-color: #7cf2ad;
+  background-color: #248834;
   width: auto;
   height: auto;
-  color: #23A025;
+  color: #FFF;
   padding: 30px;
-  border: 10px solid #63C18A;
+  border: 10px solid #1C6C29;
   border-radius: 5px;
   margin: 30px;
   display: inline-block;
@@ -78,10 +78,10 @@ nav {
 .box_addKid{
 	width: 500px;
 	margin: auto;
-	color: #23A025;
-	background: #7cf2ad;
+	color: #FFF;
+	background: #248834;
 	padding: 30px;
-	border: 10px solid #63C18A;
+	border: 10px solid #1C6C29;
 	border-radius: 10px;
 	
 }
