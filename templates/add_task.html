@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="de">
+
+
+<head>
+  <meta charset="utf-8">
+  <title>Adi's Organizatoor2000</title>
+  <script type="text/javascript" src="{{url_for('static',filename='add_task.js')}}"></script>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/ex_style.css')}}"
+  </head>
+
+  <body>
+
+    <nav class="topNav">
+      <span class="navTitle">Adi's Organizatoor2000</span>
+      <a href="http://192.168.1.120:5000/addTask"><span class="addKid">Task hinzufügen</span></a>
+      <a href="http://192.168.1.120:5000/tasks"><span class="addKid">Tasks</span></a>
+      <a href="http://192.168.1.120:5000/addKid"><span class="addKid">Kind hinzufuegen</span></a> 
+      <a href="http://192.168.1.120:5000/home"><span class="addKid">Startseite</span></a>
+    </nav>
+
+    <div class="content" class="addKidContent">
+      <h1>Task hinzufügen:</h1>
+
+      <div class="box_addKid">
+        <label for="taskNameInput">Name:</label>
+        <input type="text" id="taskNameInput" name="taskNameInput" class="singleRowInput"/>
+        <br><br>
+
+        <label for="initInput">Gestarted:</label>
+        <input type="text" id="initInput" name="initInput" class="singleRowInput"/>
+        <br><br>
+
+        <label for="dueInput">End-Datum:</label>
+        <input type="text" id="dueInput" name="dueInput" class="singleRowInput"/>
+        <br><br>
+
+        <label for="descriptionInput">Beschreibung:</label>
+        <br>
+        <textarea id="descriptionInput" name="descriptionInput" rows="4" cols="50" class="multiRowInput"></TEXTAREA>
+        <br><br>
+
+        <BUTTON type="button" id="btnAddTask">Task hinzufügen</BUTTON>
+        
+      </div>
+
+  </div>
+
+  <div class="license">Adi's Organizator2000 v0.1.0</div>
+    </body>
+
+</html>

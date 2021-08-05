@@ -57,6 +57,11 @@ class Task(Resource):
             return_value["message"] = "Couldn't assign due as Date. Use format: yyyy-MM-dd!"
             return_state = 400
             return Task.create_response(return_value, return_state)
+        
+        if (data["name"] == ""):
+            return_value["message"] = "Give the task a name!"
+            return_state = 400
+            return Task.create_response(return_value, return_state)
             
         date_init, _ = TaskModel.get_date(data["initialized"])
         task = TaskModel(data["name"], data["description"], date_due, date_init)

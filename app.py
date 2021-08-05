@@ -38,6 +38,10 @@ def editKid(_id):
 def taskes():
     return render_template("tasks.html")
 
+@app.route('/addTask')
+def addTask():
+    return render_template("add_task.html")
+
 
 api.add_resource(UserRegister, '/register')
 api.add_resource(Kid, '/kid/<string:name>')
