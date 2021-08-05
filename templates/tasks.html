@@ -24,9 +24,24 @@
       <nav class="subnav tasknav">
         <nav class="checkbox-nav">
           <label for="cb_todo">Todo</label>
-          <input type="checkbox" id="cb_todo" name="cb_todo">
+          <input type="checkbox" id="cb_todo" name="cb_todo"><br>
+
+          <label for="cb_worked_on">Worked</label>
+          <input type="checkbox" id="cb_worked_on" name="cb_worked_on"><br>
+
+          <label for="cb_done">Done</label>
+          <input type="checkbox" id="cb_done" name="cb_done"><br>
+
+          <label for="cb_error">Erro</label>
+          <input type="checkbox" id="cb_error" name="cb_error"><br>
         </nav>
+        <div class="buttonWrapper">
+          <button type="button" id="btnApplyFilter" name="btnApplyFilter">Anwenden</button>
+        </div>
+        
       </nav>
+      <br>
+
       <input type="text" id="filterDate" name="filterDate" class="dateInput"/>
       <button type="button" id="btnFilterDate">Nach Datum filtern</button>
       <br><br>

@@ -53,6 +53,10 @@ class TaskModel(db.Model):
         db.session.commit()
         
     @classmethod
+    def get_tasks_by_status(cls, status):
+        return cls.query.filter_by(status=status).all()
+        
+    @classmethod
     def get_by_name(cls, name):
         return cls.query.filter_by(name=name).first()
     

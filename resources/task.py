@@ -8,9 +8,12 @@ class Tasks(Resource):
     def get(self, param):
         if param == "due":
             pass
-        if param == "status":
-            pass
-        tasks = TaskModel.get_all()
+        elif param == "status":
+            parser = Task.get_status_parser()
+            data = parser.parse_args();
+            tasks = TaskModel.get_tasks_by_status(data["status"])
+        else:   
+             tasks = TaskModel.get_all()
         return_value = {}
         for task in tasks:
             return_value[task.id] = task.to_json()
@@ -117,6 +120,14 @@ class Task(Resource):
         return Task.create_response(return_value, 200)
         
     
+    @classmethod
+    def get_status_parser(cls):
+        parser = reqparse.RequestParser()
+        parser.add_argument("status",
+                            type=int,
+                            required=True,
+                            help="This field cannot be left blank")
+        return parser
     
     @classmethod
     def get_get_parser(cls):

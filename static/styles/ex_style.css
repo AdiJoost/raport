@@ -149,6 +149,23 @@ nav {
 	
 }
 
+.checkbox-nav {
+	display:inline-block;
+}
+
+.buttonWrapper{
+	text-align: center;
+	display: inline-block;
+	position: absolute;
+}
+
+#btnApplyFilter{
+	position: absolute;
+	top: 50%;
+	padding:10px;
+
+}
+
 #tasks {
 	color: #FFF;
 }
