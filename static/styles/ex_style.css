@@ -105,6 +105,13 @@ nav {
 	background-color: #2133E3;
 }
 
+.icon {
+	padding: 12px 12px;
+	cursor: pointer;
+	background-color: rgba(0,0,0,0.1);
+	border-radius: 10px;
+}
+
 .task {
 	background-color: #B3B3F9;
 	border: 10px solid #8080B3;

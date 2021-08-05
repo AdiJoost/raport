@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 from flask_restful import Api
 from flask_jwt import JWT
 from security import authenticate, identity
@@ -41,6 +41,10 @@ def taskes():
 @app.route('/addTask')
 def addTask():
     return render_template("add_task.html")
+
+@app.route('/static/<path:path>')
+def static_dir(path):
+    return send_from_directory("static", path)
 
 
 api.add_resource(UserRegister, '/register')
