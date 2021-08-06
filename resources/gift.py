@@ -19,7 +19,7 @@ class Gifts(Resource):
         parser = Gifts.get_gifts_parser()
         data = parser.parse_args()
         start_date = str(datetime.today())[:7]
-        end_date = str(datetime.today() + timedelta(days=60))[:7]
+        end_date = str(datetime.today() + timedelta(days=30))[:7]
         if (data["start_date"]):
             start_date = data["start_date"]
         if (data["end_date"]):

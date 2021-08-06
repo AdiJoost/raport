@@ -25,7 +25,7 @@ def create_table():
     
 @app.route('/home', methods=['GET'])
 def home():
-    return render_template("external_css.html")
+    return render_template("index.html")
 
 @app.route('/addKid', methods=['GET'])
 def addKid():
@@ -34,6 +34,10 @@ def addKid():
 @app.route('/editKid/<string:_id>')
 def editKid(_id):
     return render_template("edit_kid.html", data={"id": _id})
+
+@app.route('/allKids')
+def allKids():
+    return render_template("external_css.html")
 
 @app.route('/tasks')
 def taskes():

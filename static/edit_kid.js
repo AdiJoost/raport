@@ -16,7 +16,7 @@ function fillKid(body){
 
 	document.getElementById('nameInput').value = body["name"];
 	document.getElementById('parentsInput').value = body["parents"];
-	document.getElementById('presentsInput').value = body["presents"];
+	document.getElementById('presentsInput').value = body["present"];
 	document.getElementById('birthdayInput').value = body["birthday"];
 	document.getElementById('eatingInput').value = body["eating"];
 	document.getElementById('sleepingInput').value = body["sleeping"];

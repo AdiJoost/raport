@@ -44,11 +44,11 @@ class GiftModel(db.Model):
     @classmethod
     def get_by_start_end_date(cls, startDateString, endDateString):
         possible_gifts = db.session.query(GiftModel).filter(GiftModel.year >= int(startDateString[:4])).filter(GiftModel.year <= int(endDateString[:4])).all()
+        return_value = []
         for gift in possible_gifts:
-            if int(str(gift.kid.birthday)[5:7]) < int(startDateString[5:7]):
-                possible_gifts.remove(gift)
-            if int(str(gift.kid.birthday)[5:7]) > int(endDateString[5:7]):
-                possible_gifts.remove(gift)
-        return possible_gifts
+            if (gift.kid.birthday.month <= int(startDateString[5:7]) and gift.kid.birthday.month <= int(endDateString[5:7])):
+                return_value.append(gift)
+        
+        return return_value
     
     
