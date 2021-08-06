@@ -24,8 +24,10 @@ function displayGift(gift){
 		container.appendChild(kidName);
 
 		let birthday = document.createElement("span");
-		birthday.innerText = gift["year"] + gift["kid_birthday"].slice(4);
+		birthday.innerText = gift["year"] + gift["kid_birthday"].slice(4, 10);
 		container.appendChild(birthday);
+
+		container.appendChild(document.createElement("br"));
 
 		let type = document.createElement("span");
 		type.innerText = gift["gift_type"] + " to be implemented";
