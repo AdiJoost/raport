@@ -13,6 +13,7 @@ function getAllTasks(){
 
 function getTasks(){
 	let gotOne = false;
+	clearTasks();
 	if (document.getElementById('cb_todo').checked){
 		getTasksByStatus(1);
 		gotOne = true;
@@ -63,12 +64,16 @@ function displayTask(task){
 
 			let deleteButton = document.createElement("div");
 			deleteButton.classList.add("icon_container");
+			deleteButton.style.top = "auto";
+			deleteButton.style.bottom= "3px";
+			deleteButton.addEventListener("click", function(){
+				deleteTask(task["id"]);
+			}, false)
 				let icon = document.createElement("img");
 				icon.classList.add("icon");
 				icon.setAttribute("src", baseUrl + "/static/icon/trash.ico");
 				deleteButton.appendChild(icon);
-			deleteButton.style.top = "auto";
-			deleteButton.style.bottom= "3px";
+			
 			container.appendChild(deleteButton);
 
 			let done = document.createElement("div");
@@ -167,6 +172,21 @@ function getKidsByDay(){
 	.then(body => gotBody(body));
 }
 
+function deleteTask(id){
+	if (confirm('Möchtest du die Task wirklich aus der Datenbank entfernen? Daten werden entgültig gelöscht')){
+		let url = baseUrl + "/task/" + id;
+		fetch (url, {
+			method: "DELETE"
+			}).then(response => {
+		let obj = response.json()
+		.then(function(object){
+			alert(response.status +": " + object.message);
+			getTasks();
+			})
+	})
+	}
+}
+
 function clearTasks(){
 	for (let i = 1; i <= posibleStati; i++){
 		let tasks = document.getElementById('tasks' + i);
@@ -178,7 +198,6 @@ function clearTasks(){
 function setupButtons(){
 	let filterButton = document.getElementById('btnApplyFilter');
 	filterButton.addEventListener("click", function(){
-		clearTasks();
 		getTasks();
 	}, false);
 }
