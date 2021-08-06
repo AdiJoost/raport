@@ -47,6 +47,10 @@ def addTask():
 def giftpage():
     return render_template("gifts.html")
 
+@app.route('/addGift/<string:kid_id>')
+def addGift(kid_id):
+    return render_template("add_gift.html", data={"kid_id": kid_id})
+
 @app.route('/static/<path:path>')
 def static_dir(path):
     return send_from_directory("static", path)

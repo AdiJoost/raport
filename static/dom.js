@@ -83,6 +83,16 @@ function setKid(kid){
 				editLink.appendChild(icon);
 		newKid.appendChild(editLink);
 
+		let addGift = document.createElement("a");
+		addGift.classList.add("icon_container");
+		addGift.href = url + "/addGift/" + kid["id"];
+				let gift_icon = document.createElement("img")
+				gift_icon.className = "icon";
+				addGift.style.top = "52px";
+				gift_icon.setAttribute("src", url + "/static/icon/gift.png");
+				addGift.appendChild(gift_icon);
+		newKid.appendChild(addGift);
+
 		let titleNav = document.createElement("div");
 		titleNav.classList.add("kidTitleNav");
 			let name = document.createElement("h2");

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="de">
+
+
+<head>
+  <script type="text/javascript">
+    let data = {{data|tojson}};
+  </script>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='icon/favicon.ico')}}">
+  <meta charset="utf-8">
+  <title>Kinderinfo</title>
+  <script type="text/javascript" src="{{url_for('static',filename='edit_kid.js')}}"></script>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/ex_style.css')}}"
+  </head>
+
+  <body>
+
+    <nav class="topNav">
+      <span class="navTitle">Adi's Organizatoor2000</span>
+      <a href="http://192.168.1.120:5000/home"><span class="addKid">Startseite</span></a>
+    </nav>
+
+    <div class="content" class="addKidContent">
+      <h1 id="kidName">Geschenk hinzufügen:</h1>
+
+      <div class="box_addKid">
+        <label for="_id">ID:</label>
+        <span id="_id"></span>
+        <br><br>
+
+        <label for="giftTypeInput">Geschenktyp:</label>
+        <input type="text" id="giftTypeInput" name="giftTypeInput" class="singleRowInput"/>
+        <br><br>
+
+        <label for="yearInput">Jahr:</label>
+        <input type="text" id="yearInput" name="yearInput" class="singleRowInput"/>
+        <br><br>
+
+        <br>
+
+        <BUTTON type="button" id="btnAddKid">Geschenk hinzufügen</BUTTON>
+        
+      </div>
+
+  </div>
+
+  <div class="license">Adi's Organizator2000 v0.1.0</div>
+    </body>
+
+</html>
