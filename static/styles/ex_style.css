@@ -185,6 +185,10 @@ nav {
 	position: absolute;
 }
 
+.btnTask {
+	cursor: pointer;
+}
+
 .btnDone {
 	width: 18%;
 	height: 10%;

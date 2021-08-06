@@ -60,8 +60,20 @@ function displayTask(task){
 		let container = document.createElement("div");
 		container.classList.add(getClass(task["status"]));
 		container.classList.add("task");
+
+			let deleteButton = document.createElement("div");
+			deleteButton.classList.add("icon_container");
+				let icon = document.createElement("img");
+				icon.classList.add("icon");
+				icon.setAttribute("src", baseUrl + "/static/icon/trash.ico");
+				deleteButton.appendChild(icon);
+			deleteButton.style.top = "auto";
+			deleteButton.style.bottom= "3px";
+			container.appendChild(deleteButton);
+
 			let done = document.createElement("div");
 			done.classList.add("btnDone");
+			done.classList.add("btnTask");
 			done.addEventListener("click", function(){
 				taskUpdate(task, 3);
 			}, false);
@@ -69,6 +81,7 @@ function displayTask(task){
 
 			let open = document.createElement("div");
 			open.classList.add("btnOpen");
+			open.classList.add("btnTask");
 			open.addEventListener("click", function(){
 				taskUpdate(task, 1);
 			}, false);
@@ -76,6 +89,7 @@ function displayTask(task){
 
 			let worked_on = document.createElement("div");
 			worked_on.classList.add("btnWorked_on");
+			worked_on.classList.add("btnTask");
 			worked_on.addEventListener("click", function(){
 				taskUpdate(task, 2);
 			}, false);
@@ -83,6 +97,7 @@ function displayTask(task){
 
 			let errorTask = document.createElement("div");
 			errorTask.classList.add("btnErrorTask");
+			errorTask.classList.add("btnTask");
 			errorTask.addEventListener("click", function(){
 				taskUpdate(task, 4);
 			}, false);
@@ -100,6 +115,9 @@ function displayTask(task){
 			description.classList.add("description");
 			description.innerText = task["description"];
 			container.appendChild(description);
+
+			let deleteIcon = document.createElement("span");
+			
 		tasks.appendChild(container);
 
 }
