@@ -5,18 +5,17 @@ function getAllGifts(){
 	let url = baseUrl + "/gifts";
 	fetch(url)
 	.then(response => response.json())
-	.then(body => gotBody(body));
+	.then(body => gotBody(body, 'gifts'));
 }
 
-function gotBody(body){
+function gotBody(body, container_id){
 	for (gift in body){
-		console.log(body[gift]);
-		displayGift(body[gift]);
+		displayGift(body[gift], container_id);
 	}
 }
 
-function displayGift(gift){
-	let gifts = document.getElementById('gifts');
+function displayGift(gift, container_id){
+	let gifts = document.getElementById(container_id);
 	let container = document.createElement("div");
 	container.classList.add("gift");
 		let kidName = document.createElement("h3");
@@ -65,16 +64,28 @@ function deleteGift(id){
 	}
 }
 
-function clearGifts(){
-	let gifts = document.getElementById('gifts');
+function clearGifts(container_id){
+	let gifts = document.getElementById(container_id);
 	gifts.innerText = "";
 }
 
 function filterGifts(){
-	let startDate = document.getElementById('giftStartDate');
-	let endDate = document.getElementById('giftEndDate');
-	console.log(startDate.value);
-	console.log(endDate.value);
+	let startDate = document.getElementById('giftStartDate').value;
+	let endDate = document.getElementById('giftEndDate').value;
+	clearGifts('gifts_by_date');
+	let url = baseUrl + "/gifts";
+	fetch(url,{
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			"start_date": startDate,
+			"end_date": endDate,
+							})
+	})
+	.then(response => response.json())
+	.then(body => gotBody(body, 'gifts_by_date'));
 }
 
 function setupButtons(){
