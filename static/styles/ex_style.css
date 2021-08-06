@@ -1,11 +1,13 @@
 html {
   background-color : #FFF;
-  color : green;
+  color : #23A025;
   margin: 0px;
+  background: #222222;
 }
 
 body{
 	margin: 0px;
+
 }
 
 h1 {
@@ -15,10 +17,14 @@ h1 {
 }
 
 nav {
+	
+}
+
+.topNav {
 	width: 100%;
 	height: auto;
 	padding: 30px;
-	background-color: rgba(170, 170, 170, 0.8);
+	background-color: rgba(56, 56, 56, 0.8);
 	top:0px;
 	margin: 0px;
 	display: block;
@@ -26,15 +32,16 @@ nav {
 	z-index: 99;
 }
 
-
 .kid_box {
-  background-color: #7cf2ad;
+  background-color: #248834;
   width: auto;
   height: auto;
+  color: #FFF;
   padding: 30px;
-  border: 10px solid #6DEA26;
+  border: 10px solid #1C6C29;
   border-radius: 5px;
   margin: 30px;
+  position: relative;
   display: inline-block;
 }
 
@@ -42,35 +49,56 @@ nav {
 	margin:10px;
 	margin-top: 130px;
 	text-align: center;
+	color: #FFF;
+
 }
 
 .navTitle {
 	font-size: 30px;
 	padding:30px;
+	color: #FFF;
 }
 
 .addKid {
 	float: right;
-	padding: 30px;
-	margin-right: 10px;
+	padding: 10px;
+	margin-right: 30px;
+	color: #FFF;
 }
 
 .singleRowInput {
 	float: right;
+	background-color:#ccc;
+}
+
+.multiRowInput {
+	background-color: #ccc;
 }
 
 
 .box_addKid{
 	width: 500px;
 	margin: auto;
+	color: #FFF;
+	background: #248834;
+	padding: 30px;
+	border: 10px solid #1C6C29;
+	border-radius: 10px;
 	
 }
 
+.kidTitleNav {
+	text-align: center;
+	position: relative;
+}
+/*
 .icon {
 	height: 30px;
 	width: auto;
 	float: right;
-}
+	position: absolute;
+	top: 50%;
+}*/
 
 .presentBox{
 	width: 40px;
@@ -85,3 +113,120 @@ nav {
 	background-color: #2133E3;
 }
 
+.icon_container{
+	position: absolute;
+	top: 3px;
+	right: 3px;
+}
+
+.icon {
+	height: 50%;
+	max-height: 20px;
+	
+	
+	padding: 12px 12px;
+	cursor: pointer;
+	background-color: rgba(0,0,0,0.1);
+	border-radius: 10px;
+}
+
+.task {
+	background-color: #B3B3F9;
+	border: 10px solid #8080B3;
+	display: inline-block;
+	border-radius: 5px;
+  	margin: 30px;
+  	width: auto;
+  	height: auto;
+  	padding: 30px;
+  	position: relative;	
+}
+
+.task .description {
+	background-color: rgba(0,0,0,0.1);
+
+	max-width: 200px;
+	margin: auto;
+}
+
+.license{
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+
+}
+
+.done{
+	background-color: #316045;
+	border-color: #224330;
+}
+
+.error{
+	background-color: #603131; 
+	border-color: #432222;
+}
+
+.worked_on {
+	background-color: #583866;
+	border-color: #3D2747;
+}
+
+.toDo {
+	
+}
+
+.checkbox-nav {
+	display:inline-block;
+}
+
+.buttonWrapper{
+	text-align: center;
+	display: inline-block;
+	position: absolute;
+}
+
+.btnTask {
+	cursor: pointer;
+}
+
+.btnDone {
+	width: 18%;
+	height: 10%;
+	left: 2%;
+	background-color: #316045;
+	position: absolute;
+}
+
+.btnWorked_on {
+	width: 18%;
+	height: 10%;
+	left: 28%;
+	background-color: #583866;
+	position: absolute;
+}
+
+.btnOpen {
+	width: 18%;
+	height: 10%;
+	right: 28%;
+	background-color: #B3B3F9;
+	position: absolute;
+}
+
+.btnErrorTask {
+	width: 18%;
+	height: 10%;
+	right: 2%;
+	background-color: #603131;
+	position: absolute;
+}
+#btnApplyFilter{
+	position: absolute;
+	top: 50%;
+	padding:10px;
+
+}
+
+#tasks {
+	color: #FFF;
+}

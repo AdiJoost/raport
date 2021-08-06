@@ -10,6 +10,7 @@
   <script type="text/javascript">
     let data = {{data|tojson}};
   </script>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='icon/favicon.ico')}}">
   <meta charset="utf-8">
   <title>Kinderinfo</title>
   <script type="text/javascript" src="{{url_for('static',filename='edit_kid.js')}}"></script>
@@ -18,7 +19,7 @@
 
   <body>
 
-    <nav>
+    <nav class="topNav">
       <span class="navTitle">Adi's Organizatoor2000</span>
       <a href="http://192.168.1.120:5000/home"><span class="addKid">Startseite</span></a>
     </nav>
@@ -74,7 +75,7 @@
 
   </div>
 
-
+  <div class="license">Adi's Organizator2000 v0.1.0</div>
     </body>
 
 </html>

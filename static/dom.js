@@ -61,29 +61,6 @@ function clearKidsInfo(){
 	let kidsInfo = document.getElementById('kinderinfo');
 	kidsInfo.innerText = "";
 }
-/*
-var HttpClient = function() {
-    this.get = function(aUrl, aCallback) {
-        var anHttpRequest = new XMLHttpRequest();
-        anHttpRequest.onreadystatechange = function() { 
-            if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
-                aCallback(anHttpRequest.responseText);
-        }
-
-        anHttpRequest.open( "GET", aUrl, true );            
-        anHttpRequest.send( null );
-    }
-}
-
-      
-
-function onAllKidsStateChange (kids_raw){
-	kids = JSON.parse(kids_raw);
-	console.log(kids);
-	for (kid in kids){
-		setElement(kids[kid]);
-	}
-}*/
 
 function setElement(kid){
 	let newKid = setKid(kid);
@@ -97,22 +74,26 @@ function setElement(kid){
 function setKid(kid){
 	let newKid = document.createElement("div");
 
+		let editLink = document.createElement("a");
+		editLink.classList.add("icon_container");
+			editLink.href = url + "/editKid/" + kid["id"];
+				let icon = document.createElement("img")
+				icon.className = "icon";
+				icon.setAttribute("src", url + "/static/icon/draw.png");
+				editLink.appendChild(icon);
+		newKid.appendChild(editLink);
+
 		let titleNav = document.createElement("div");
+		titleNav.classList.add("kidTitleNav");
 			let name = document.createElement("h2");
 			name.innerText = kid["name"];
 			name.style.display = "inline";
 			titleNav.appendChild(name);
 
-			let editLink = document.createElement("a");
-			editLink.href = url + "/editKid/" + kid["id"];
-				let icon = document.createElement("span")
-				icon.className = "icon";
-				icon.innerText = "Edit";
-				
-				editLink.appendChild(icon);
-			titleNav.appendChild(editLink);
 
 		newKid.appendChild(titleNav);
+
+
 
 		let presentsDisplay = document.createElement("div");
 			let presentTitle = document.createElement("h3");

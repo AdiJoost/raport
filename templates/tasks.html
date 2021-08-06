@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="de">
+
+
+<head>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='icon/favicon.ico')}}">
+  <title>Tasks</title>
+  <script type="text/javascript" src="{{url_for('static',filename='tasks.js')}}"></script>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/ex_style.css')}}">
+  </head>
+
+  <body>
+
+    <nav class="topNav">
+      <span class="navTitle">Adi's Organizatoor2000</span>
+      <a href="http://192.168.1.120:5000/addTask"><span class="addKid">Task hinzufügen</span></a>
+      <a href="http://192.168.1.120:5000/tasks"><span class="addKid">Tasks</span></a>
+      <a href="http://192.168.1.120:5000/addKid"><span class="addKid">Kind hinzufuegen</span></a> 
+      <a href="http://192.168.1.120:5000/home"><span class="addKid">Startseite</span></a>
+    </nav>
+
+    <div class="content">
+      <h1>Tasks:</h1>
+      <nav class="subnav tasknav">
+        <nav class="checkbox-nav">
+          <label for="cb_todo">Todo</label>
+          <input type="checkbox" id="cb_todo" name="cb_todo"><br>
+
+          <label for="cb_worked_on">Worked</label>
+          <input type="checkbox" id="cb_worked_on" name="cb_worked_on"><br>
+
+          <label for="cb_done">Done</label>
+          <input type="checkbox" id="cb_done" name="cb_done"><br>
+
+          <label for="cb_error">Erro</label>
+          <input type="checkbox" id="cb_error" name="cb_error"><br>
+        </nav>
+        <div class="buttonWrapper">
+          <button type="button" id="btnApplyFilter" name="btnApplyFilter">Anwenden</button>
+        </div>
+        
+      </nav>
+      <br>
+
+      <input type="text" id="filterDate" name="filterDate" class="dateInput"/>
+      <button type="button" id="btnFilterDate">Nach Datum filtern</button>
+      <br><br>
+
+      <div id="tasks1">
+      </div><br>
+      <div id="tasks2">
+      </div><br>
+      <div id="tasks3">
+      </div><br>
+      <div id="tasks4">
+      </div>
+  </div>
+
+  <div class="license">Adi's Organizator2000 v0.1.0</div>
+
+    </body>
+
+</html>

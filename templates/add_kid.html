@@ -8,6 +8,7 @@
 
 <head>
   <meta charset="utf-8">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='icon/favicon.ico')}}">
   <title>Kinderinfo</title>
   <script type="text/javascript" src="{{url_for('static',filename='add_kid.js')}}"></script>
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/ex_style.css')}}"
@@ -15,8 +16,11 @@
 
   <body>
 
-    <nav>
+    <nav class="topNav">
       <span class="navTitle">Adi's Organizatoor2000</span>
+      <a href="http://192.168.1.120:5000/addTask"><span class="addKid">Task hinzufügen</span></a>
+      <a href="http://192.168.1.120:5000/tasks"><span class="addKid">Tasks</span></a>
+      <a href="http://192.168.1.120:5000/addKid"><span class="addKid">Kind hinzufuegen</span></a> 
       <a href="http://192.168.1.120:5000/home"><span class="addKid">Startseite</span></a>
     </nav>
 
@@ -42,22 +46,22 @@
 
         <label for="eatingInput">Essen:</label>
         <br>
-        <textarea id="eatingInput" name="eatingInput" rows="4" cols="50"></TEXTAREA>
+        <textarea id="eatingInput" name="eatingInput" rows="4" cols="50" class="multiRowInput"></TEXTAREA>
         <br><br>
 
         <label for="sleepingInput">Schlafen:</label>
         <br>
-        <textarea id="sleepingInput" name="sleepingInput" rows="4" cols="50"></TEXTAREA>
+        <textarea id="sleepingInput" name="sleepingInput" rows="4" cols="50" class="multiRowInput"></TEXTAREA>
         <br><br>
 
         <label for="spezInput">Speziell:</label>
         <br>
-        <textarea id="spezInput" name="spezInput" rows="4" cols="50"></TEXTAREA>
+        <textarea id="spezInput" name="spezInput" rows="4" cols="50" class="multiRowInput"></TEXTAREA>
         <br><br>
 
         <label for="importantInput">Wichtig:</label>
         <br>
-        <textarea id="importantInput" name="importantInput" rows="4" cols="50"></TEXTAREA>
+        <textarea id="importantInput" name="importantInput" rows="4" cols="50" class="multiRowInput"></TEXTAREA>
         <br><br><br>
 
         <BUTTON type="button" id="btnAddKid">Kind hinzufügen</BUTTON>
@@ -66,7 +70,7 @@
 
   </div>
 
-
+  <div class="license">Adi's Organizator2000 v0.1.0</div>
     </body>
 
 </html>
