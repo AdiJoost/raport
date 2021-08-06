@@ -34,6 +34,14 @@ function sendPost(){
 	.catch((error) => console.log(error));
 }
 
+function getError(response){
+	let body = response.json().then(function(object){
+		alert(response.status + ": " + JSON.stringify(object.message));
+		console.log(object);
+	});
+	
+}
+
 window.addEventListener("load", function(){
 	setupButton();
 	

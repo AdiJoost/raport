@@ -3,7 +3,9 @@ from flask_jwt import jwt_required
 from models.gift_model import GiftModel
 from models.kid_model import KidModel
 from flask import make_response
+from datetime import datetime, timedelta
 import flask
+
 
 class Gifts(Resource):
     def get(self):
@@ -12,6 +14,35 @@ class Gifts(Resource):
         for gift in gifts:
             return_value[gift.id] = gift.to_json();
         return Gift.create_response(return_value, 200);
+    
+    def post(self):
+        parser = Gifts.get_gifts_parser()
+        data = parser.parse_args()
+        start_date = str(datetime.today())[:7]
+        end_date = str(datetime.today() + timedelta(days=60))[:7]
+        if (data["start_date"]):
+            start_date = data["start_date"]
+        if (data["end_date"]):
+            end_date = data["end_date"]
+            
+        gifts = GiftModel.get_by_start_end_date(start_date, end_date);
+        return_value = {}
+        for gift in gifts:
+            return_value[gift.id] = gift.to_json();
+        return Gift.create_response(return_value, 200);
+        
+        
+    @classmethod 
+    def get_gifts_parser(cls):
+        parser = reqparse.RequestParser()
+        parser.add_argument("start_date",
+                            type=str,
+                            help="This field cannot be left blank")
+        parser.add_argument("end_date",
+                            type=str,
+                            help="This field cannot be left blank and has to be an integer")
+        
+        return parser
 
 class Gift(Resource):
     def get(self, _id):
@@ -65,7 +96,7 @@ class Gift(Resource):
         parser.add_argument("gift_type",
                             type=int,
                             required=True,
-                            help="This field cannot be left blank")
+                            help="This field cannot be left blank and has to be an integer")
         parser.add_argument("year",
                             type=int,
                             required=True,

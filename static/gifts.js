@@ -70,7 +70,22 @@ function clearGifts(){
 	gifts.innerText = "";
 }
 
+function filterGifts(){
+	let startDate = document.getElementById('giftStartDate');
+	let endDate = document.getElementById('giftEndDate');
+	console.log(startDate.value);
+	console.log(endDate.value);
+}
+
+function setupButtons(){
+	let filterButton = document.getElementById('btnFilterGift');
+	filterButton.addEventListener('click', function(){
+		filterGifts();
+	}, false)
+}
+
 window.addEventListener("load", function(){
+	setupButtons();
 	getAllGifts();
 	
 }, false)
