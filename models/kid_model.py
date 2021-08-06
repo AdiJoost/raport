@@ -138,6 +138,21 @@ class KidModel(db.Model):
         else:
             return False;
         
+    @classmethod
+    def get_all_kids_by_birthday(cls, startDate, endDate):
+        possible_kids = cls.query.all()
+        return_value = []
+        if (startDate <= endDate):
+            for kid in possible_kids:
+                if (kid.birthday.month >= startDate and kid.birthday.month <= endDate):
+                    return_value.append(kid)
+        else:
+            for kid in possible_kids:
+                if (kid.birthday.month >= startDate or kid.birthday.month <= endDate):
+                    return_value.append(kid)
+        return return_value
+            
+        
             
         
     

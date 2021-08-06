@@ -97,6 +97,7 @@ function setupButtons(){
 
 window.addEventListener("load", function(){
 	setupButtons();
+	filterGifts();
 	getAllGifts();
 	
 }, false)

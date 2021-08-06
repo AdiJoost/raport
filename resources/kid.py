@@ -2,6 +2,7 @@ from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
 from models.kid_model import KidModel
 from flask import make_response
+from datetime import timedelta
 import datetime
 import flask
 
@@ -33,6 +34,39 @@ class Kids(Resource):
         response = flask.jsonify(return_value)
         response.headers.add('Access-Control-Allow-Origin', 'http://127.0.0.1:5000')
         return response
+    
+    def post(self):
+        parser = Kids.get_kids_parser()
+        data = parser.parse_args()
+        start_date = datetime.datetime.today().month
+        if (data["start_date"]):
+            start_date = data["start_date"]
+        end_date = start_date + 2
+        if end_date > 12:
+            end_date -= 12
+        if (data["end_date"]):
+            end_date = data["end_date"]
+        return_value = {}
+        kids = KidModel.get_all_kids_by_birthday(start_date, end_date)
+        for kid in kids:
+           return_value[kid.id] = kid.to_json()
+            
+        
+        response = flask.jsonify(return_value)
+        response.headers.add('Access-Control-Allow-Origin', 'http://127.0.0.1:5000')
+        return response
+        
+    @classmethod 
+    def get_kids_parser(cls):
+        parser = reqparse.RequestParser()
+        parser.add_argument("start_date",
+                            type=int,
+                            help="This field cannot be left blank")
+        parser.add_argument("end_date",
+                            type=int,
+                            help="This field cannot be left blank and has to be an integer")
+        
+        return parser
 
 class Kid(Resource):
     def get(self, name):
