@@ -43,6 +43,10 @@ def taskes():
 def addTask():
     return render_template("add_task.html")
 
+@app.route('/giftpage')
+def giftpage():
+    return render_template("gifts.html")
+
 @app.route('/static/<path:path>')
 def static_dir(path):
     return send_from_directory("static", path)

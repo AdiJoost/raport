@@ -10,7 +10,7 @@
   <meta charset="utf-8">
   <link rel="shortcut icon" href="{{ url_for('static', filename='icon/favicon.ico')}}">
   <title>Kinderinfo</title>
-  <script type="text/javascript" src="{{url_for('static',filename='dom.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static',filename='gifts.js')}}"></script>
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/ex_style.css')}}"
   </head>
 
@@ -26,12 +26,9 @@
     </nav>
 
     <div class="content">
-      <h1>Kinderinfos:</h1>
+      <h1>Geschenke:</h1>
 
-      <input type="text" id="filterDate" name="filterDate" class="dateInput"/>
-      <button type="button" id="btnFilterDate">Nach Datum filtern</button>
-
-      <div id="kinderinfo">
+      <div id="gifts">
       </div>
     </div>
 
