@@ -86,7 +86,49 @@ function filterGifts(){
 	})
 	.then(response => response.json())
 	.then(body => gotBody(body, 'gifts_by_date'));
+	getKids(startDate, endDate);
 }
+
+function getKids(startDate, endDate){
+	let url = baseUrl + "/kids";
+	fetch(url, {
+		method: "POST",
+		headers: {
+		"Content-Type": "application/json"
+		},
+		body: JSON.stringify({"start_date": parseInt(startDate.slice(5,)),
+								"end_date": parseInt(endDate.slice(5,))
+							})
+	})
+	.then(response => response.json())
+	.then(body => gotKidBody(body));
+}
+
+function gotKidBody(body){
+	clearGifts("kidsGift");
+	for (kid in body){
+		displayKid(body[kid], "kidsGift")
+	}
+}
+
+function displayKid(kid, container_id){
+	let kids = document.getElementById(container_id);
+
+		let container = document.createElement("div");
+		container.classList.add("kid_box");
+
+			let name = document.createElement("h3");
+			name.innerText = kid["name"];
+			container.appendChild(name);
+
+			let birthday = document.createElement("span");
+			birthday.innerText = "Monat: " + kid["birthday"].slice(5,7) + "\n Tag: " + kid["birthday"].slice(8,);
+			container.appendChild(birthday);
+
+		kids.appendChild(container);
+
+}
+
 
 function setupButtons(){
 	let filterButton = document.getElementById('btnFilterGift');
