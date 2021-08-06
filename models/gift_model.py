@@ -21,7 +21,8 @@ class GiftModel(db.Model):
                 "kid_id": self.kid_id,
                 "gift_type": self.gift_type,
                 "year": self.year,
-                "kid_name": self.kid.name}
+                "kid_name": self.kid.name,
+                "kid_birthday": str(self.kid.birthday)}
 
     def save(self):
         db.session.add(self)

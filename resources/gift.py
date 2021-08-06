@@ -43,8 +43,17 @@ class Gift(Resource):
         return_status = 201
         return Gift.create_response(return_value, return_status)
     
-    def delete(self):
-        pass
+    def delete(self, _id):
+        gift = GiftModel.get_by_id(_id)
+        if gift:
+            gift.deleteMe()
+            return_value = {"message": "Gift deleted"}
+            return_status = 200
+        else:
+            return_value = {"message": "No gift with given ID found"}
+            return_status = 404
+        return Gift.create_response(return_value, return_status)
+            
     
     @classmethod
     def get_parser(cls):
