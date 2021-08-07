@@ -1,12 +1,5 @@
-let url = "http://192.168.1.120:5000";
+let baseUrl = "http://192.168.1.120:5000";
 
-function getAllKids(){
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", "http://192.168.1.120:5000/kids", false);
-        xmlHttp.send()
-        return xmlHttp.responseText;
-
-       }
 
 function getAllKidsByFetch(){
 	let thisBody = null;
@@ -18,14 +11,16 @@ function getAllKidsByFetch(){
 
 function getKidsByDay(){
 	let date = document.getElementById('filterDate').value;
-	let fullUrl = url + "/kids/" + date
+	if (date == ""){
+		date = new Date().toJSON().slice(0,10);
+	}
+	let fullUrl = baseUrl + "/kids/" + date
 	fetch(fullUrl)
 	.then(response => {
 		if (!response.ok){
 			loadingError(response);
 			throw new Error("Server didn't like request");
 		}
-		console.log(response);
 		return response.json();
 		
 	})
@@ -33,7 +28,6 @@ function getKidsByDay(){
 }
 
 function gotBody(body){
-	console.log(body);
 	clearKidsInfo();
 	for (kid in body){
 		setElement(body[kid]);
@@ -74,24 +68,7 @@ function setElement(kid){
 function setKid(kid){
 	let newKid = document.createElement("div");
 
-		let editLink = document.createElement("a");
-		editLink.classList.add("icon_container");
-			editLink.href = url + "/editKid/" + kid["id"];
-				let icon = document.createElement("img")
-				icon.className = "icon";
-				icon.setAttribute("src", url + "/static/icon/draw.png");
-				editLink.appendChild(icon);
-		newKid.appendChild(editLink);
-
-		let addGift = document.createElement("a");
-		addGift.classList.add("icon_container");
-		addGift.href = url + "/addGift/" + kid["id"];
-				let gift_icon = document.createElement("img")
-				gift_icon.className = "icon";
-				addGift.style.top = "52px";
-				gift_icon.setAttribute("src", url + "/static/icon/gift.png");
-				addGift.appendChild(gift_icon);
-		newKid.appendChild(addGift);
+	
 
 		let titleNav = document.createElement("div");
 		titleNav.classList.add("kidTitleNav");
@@ -136,15 +113,6 @@ function setKid(kid){
 		let spez = setRow("Speziell:", "h3", kid["spez"], "p");
 		newKid.appendChild(spez);
 
-		let birthday = setRow("Birthday", "h3", kid["birthday"], "p");
-		newKid.appendChild(birthday);
-
-		let presents = setRow("Presents", "h3", kid["present"], "p");
-		newKid.appendChild(presents);
-
-		let _id = setRow("ID:", "h3", kid["id"], "p");
-		newKid.appendChild(_id);
-
 	return newKid;
 }
 
@@ -166,16 +134,149 @@ function setView(){
 	}, false);
 }
 
+function getBirthdays(){
+	let url = baseUrl + "/kids";
+	start_date = parseInt(new Date().toJSON().slice(5,7)) - 1;
+	end_date = start_date + 2;
+	if (end_date > 12){
+		end_date -= 12;
+	}
+	fetch(url, {
+		method: "POST",
+		headers: {
+		"Content-Type": "application/json"
+		},
+		body: JSON.stringify({"start_date": start_date,
+								"end_date": end_date
+							})
+	})
+	.then(response => response.json())
+	.then(body => gotKidBody(body));
+}
+
+function gotKidBody(body){
+	clearGifts("birthdays");
+	for (kid in body){
+		displayKid(body[kid], "birthdays")
+	}
+}
+
+function displayKid(kid, container_id){
+	let kids = document.getElementById(container_id);
+
+		let container = document.createElement("div");
+		container.classList.add("kid_box");
+
+			let name = document.createElement("h3");
+			name.innerText = kid["name"];
+			container.appendChild(name);
+
+			let birthday = document.createElement("span");
+			birthday.innerText = "Monat: " + kid["birthday"].slice(5,7) + "\n Tag: " + kid["birthday"].slice(8,);
+			container.appendChild(birthday);
+
+		kids.appendChild(container);
+
+}
+
+function clearGifts(container_id){
+	let gifts = document.getElementById(container_id);
+	gifts.innerText = "";
+}
+
+function filterGifts(){
+	let thisMonth = new Date().getMonth() + 1;
+	let thisYear = new Date().getFullYear();
+	let startMonth = thisMonth;
+	let endMonth = thisMonth;
+	let endYear = thisYear;
+	let startYear = thisYear;
+	if (thisMonth != 1){
+		startMonth = thisMonth - 1;
+		endMonth = thisMonth + 1;
+		if (endMonth > 12){
+			endMonth -= 12;
+			endYear += 1;
+		}
+	} else {
+		startMonth = 12;
+		startYear -= 1;
+		endMonth = thisMonth + 1;
+	}
+	clearGifts('gifts');
+	console.log(new Date(startYear, startMonth, 1,0,0,0).toJSON().slice(0,10));
+	console.log(new Date(endYear, endMonth, 1,0,0,0).toJSON().slice(0,10));
+	let url = baseUrl + "/gifts";
+	fetch(url,{
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			"start_date": new Date(startYear, startMonth, 1,0,0,0).toJSON().slice(0,10),
+			"end_date": new Date(endYear, endMonth, 1,0,0,0).toJSON().slice(0,10),
+							})
+	})
+	.then(response => response.json())
+	.then(body => gotGiftBody(body, 'gifts'));
+}
+
+function gotGiftBody(body, container_id){
+	clearGifts(container_id);
+	for (gift in body){
+		displayGift(body[gift], container_id);
+	}
+}
+
+function displayGift(gift, container_id){
+	let gifts = document.getElementById(container_id);
+	let container = document.createElement("div");
+	container.classList.add("gift");
+		let kidName = document.createElement("h3");
+		kidName.innerText = gift["kid_name"];
+		container.appendChild(kidName);
+
+		let birthday = document.createElement("span");
+		birthday.innerText = gift["year"] + gift["kid_birthday"].slice(4, 10);
+		container.appendChild(birthday);
+
+		container.appendChild(document.createElement("br"));
+
+		let type = document.createElement("span");
+		type.innerText = gift["gift_type"] + " to be implemented";
+		container.appendChild(type);
+
+		let deleteButton = document.createElement("div");
+			deleteButton.classList.add("icon_container");
+			deleteButton.style.top = "auto";
+			deleteButton.style.bottom= "3px";
+			deleteButton.addEventListener("click", function(){
+				deleteGift(gift["id"]);
+			}, false)
+				let icon = document.createElement("img");
+				icon.classList.add("icon");
+				icon.setAttribute("src", baseUrl + "/static/icon/trash.ico");
+				deleteButton.appendChild(icon);
+			
+			container.appendChild(deleteButton);
+
+	gifts.appendChild(container);
+}
+
 window.addEventListener("load", function(){
-	getAllKidsByFetch();
+	setView();
+	getKidsByDay();
+	getBirthdays();
+	filterGifts();
 	/*let kids_raw = getAllKids();
 	kids = JSON.parse(kids_raw);
 	for (kid in kids){
 		setElement(kids[kid]);
 	}*/
-	setView();
+	
 	
 }, false)
+
 
 
 /*
@@ -197,13 +298,10 @@ function isPresent(kid, sector){
 	let dayOfWeek = 0;
 	if (!isNaN(day.getTime())){
 		dayOfWeek = day.getDay();
-		console.log("Valid Date");
 	} else {
 		day = new Date();
-		console.log("Invalid Date");
 		dayOfWeek = day.getDay();
 	}
-	console.log("DayOfWeek: " + dayOfWeek);
 	//wenn zuviel Zeit: Durch switch-Statement ersetzen
 	let roi = "f";
 	if(dayOfWeek == 1){
@@ -217,7 +315,6 @@ function isPresent(kid, sector){
 	} else if (dayOfWeek == 5){
 		roi = kid["present"].slice(4, 5);
 	}
-	console.log(kid["name"] + ": dayOfWeek: " + dayOfWeek + " Sector: " + sector + " roi: " + roi);
 
 	switch(sector){
 		case 0:

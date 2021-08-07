@@ -18,6 +18,8 @@ class KidModel(db.Model):
     sleeping = db.Column(db.String(255))
     spez = db.Column(db.String(255))
     important = db.Column(db.String(255))
+    
+    gifts = db.relationship("GiftModel")
 
     def __init__(self, name, parents, present, birthday, eating, sleeping, spez, important):
         self.name = name
@@ -38,7 +40,9 @@ class KidModel(db.Model):
                             "eating": self.eating,
                             "sleeping": self.sleeping,
                             "spez":self.spez,
-                            "important":self.important}
+                            "important":self.important,
+                            "gifts": [gift.to_json() for gift in self.gifts]
+                            }
     
     def to_string (self):
         return f"name: {self.name},\nparents: {self.parents}\npresent:{self.present}"
@@ -133,6 +137,21 @@ class KidModel(db.Model):
             return True;
         else:
             return False;
+        
+    @classmethod
+    def get_all_kids_by_birthday(cls, startDate, endDate):
+        possible_kids = cls.query.all()
+        return_value = []
+        if (startDate <= endDate):
+            for kid in possible_kids:
+                if (kid.birthday.month >= startDate and kid.birthday.month <= endDate):
+                    return_value.append(kid)
+        else:
+            for kid in possible_kids:
+                if (kid.birthday.month >= startDate or kid.birthday.month <= endDate):
+                    return_value.append(kid)
+        return return_value
+            
         
             
         
