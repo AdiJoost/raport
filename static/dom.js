@@ -1,16 +1,10 @@
-let url = "http://192.168.1.120:5000";
+let baseUrl = "";
 
-function getAllKids(){
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("GET", "http://192.168.1.120:5000/kids", false);
-        xmlHttp.send()
-        return xmlHttp.responseText;
 
-       }
 
 function getAllKidsByFetch(){
 	let thisBody = null;
-	fetch("http://192.168.1.120:5000/kids")
+	fetch(baseUrl + "/kids")
 	.then(response => response.json())
 	.then(body => gotBody(body));
 	
@@ -18,7 +12,7 @@ function getAllKidsByFetch(){
 
 function getKidsByDay(){
 	let date = document.getElementById('filterDate').value;
-	let fullUrl = url + "/kids/" + date
+	let fullUrl = baseUrl + "/kids/" + date
 	fetch(fullUrl)
 	.then(response => {
 		if (!response.ok){
@@ -76,20 +70,20 @@ function setKid(kid){
 
 		let editLink = document.createElement("a");
 		editLink.classList.add("icon_container");
-			editLink.href = url + "/editKid/" + kid["id"];
+			editLink.href = baseUrl + "/editKid/" + kid["id"];
 				let icon = document.createElement("img")
 				icon.className = "icon";
-				icon.setAttribute("src", url + "/static/icon/draw.png");
+				icon.setAttribute("src", baseUrl + "/static/icon/draw.png");
 				editLink.appendChild(icon);
 		newKid.appendChild(editLink);
 
 		let addGift = document.createElement("a");
 		addGift.classList.add("icon_container");
-		addGift.href = url + "/addGift/" + kid["id"];
+		addGift.href = baseUrl + "/addGift/" + kid["id"];
 				let gift_icon = document.createElement("img")
 				gift_icon.className = "icon";
 				addGift.style.top = "52px";
-				gift_icon.setAttribute("src", url + "/static/icon/gift.png");
+				gift_icon.setAttribute("src", baseUrl + "/static/icon/gift.png");
 				addGift.appendChild(gift_icon);
 		newKid.appendChild(addGift);
 
@@ -166,13 +160,31 @@ function setView(){
 	}, false);
 }
 
+function navSetup(){
+	let nav = document.getElementById('topNav');
+		nav.appendChild(createNav("Geschenke", "/giftpage"))
+		nav.appendChild(createNav("Task hinzufügen", "/addTask"))
+		nav.appendChild(createNav("Tasks", "/tasks"))
+		nav.appendChild(createNav("Verwalten", "/allKids"))
+		nav.appendChild(createNav("Kind hinzufuegen", "/addKid"))
+		nav.appendChild(createNav("Startseite", "/home"))
+
+}
+
+function createNav(name, myUrlTail){
+	let aTag = document.createElement("a");
+	aTag.href = baseUrl + myUrlTail;
+		let spanTag = document.createElement("span");
+		spanTag.classList.add("addKid");
+		spanTag.innerText = name;
+		aTag.appendChild(spanTag);
+	return aTag;
+}
+
 window.addEventListener("load", function(){
+	baseUrl = window.location.origin;
+	navSetup();
 	getAllKidsByFetch();
-	/*let kids_raw = getAllKids();
-	kids = JSON.parse(kids_raw);
-	for (kid in kids){
-		setElement(kids[kid]);
-	}*/
 	setView();
 	
 }, false)

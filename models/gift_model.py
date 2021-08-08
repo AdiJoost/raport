@@ -17,6 +17,14 @@ class GiftModel(db.Model):
         self.year = year
                 
     def to_json(self):
+        if (self.kid == None):
+            return {"id": self.id,
+                "kid_id": self.kid_id,
+                "gift_type": self.gift_type,
+                "year": self.year,
+                "kid_name": "None, probably should delete this",
+                "kid_birthday": "None, probably should delete this"}
+        
         return {"id": self.id,
                 "kid_id": self.kid_id,
                 "gift_type": self.gift_type,
@@ -46,7 +54,7 @@ class GiftModel(db.Model):
         possible_gifts = db.session.query(GiftModel).filter(GiftModel.year >= int(startDateString[:4])).filter(GiftModel.year <= int(endDateString[:4])).all()
         return_value = []
         for gift in possible_gifts:
-            if (gift.kid.birthday.month <= int(startDateString[5:7]) and gift.kid.birthday.month <= int(endDateString[5:7])):
+            if (gift.kid != None and gift.kid.birthday.month <= int(startDateString[5:7]) and gift.kid.birthday.month <= int(endDateString[5:7])):
                 return_value.append(gift)
         
         return return_value
