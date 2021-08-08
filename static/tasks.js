@@ -113,7 +113,7 @@ function displayTask(task){
 			container.appendChild(name);
 
 			let due = document.createElement("p");
-			due.innerHTML = "<b>Due: </b>" + task["due"];
+			due.innerHTML = "<b>Due: </b>" + task["due"].slice(0,16);
 			container.appendChild(due);
 
 			let description = document.createElement("p");
