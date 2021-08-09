@@ -20,6 +20,11 @@ nav {
 	
 }
 
+.presentsContainer{
+	display: inline-block;
+	margin: 15px;
+}
+
 .btn.delete {
 	background-color: #FF8F8F;
 }
