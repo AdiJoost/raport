@@ -16,13 +16,48 @@ function fillKid(body){
 
 	document.getElementById('nameInput').value = body["name"];
 	document.getElementById('parentsInput').value = body["parents"];
-	document.getElementById('presentsInput').value = body["present"];
 	document.getElementById('birthdayInput').value = body["birthday"];
 	document.getElementById('eatingInput').value = body["eating"];
 	document.getElementById('sleepingInput').value = body["sleeping"];
 	document.getElementById('spezInput').value = body["spez"];
 	document.getElementById('importantInput').value = body["important"];
 	document.getElementById('_id').innerText = body["id"];
+	setPresents(body["present"]);
+}
+
+function setPresents (code){
+	setDay("Montag", code.slice(0,1));
+	setDay("Dienstag", code.slice(1,2));
+	setDay("Mittwoch", code.slice(2,3));
+	setDay("Donnerstag", code.slice(3,4));
+	setDay("Freitag", code.slice(4,5));
+}
+
+function setDay(day, letter){
+	let morning = document.getElementById('morning' + day);
+	let lunch = document.getElementById('lunch' + day);
+	let afternoon = document.getElementById('afternoon' + day);
+	switch (letter){
+		case "a":
+			morning.checked = true;
+			lunch.checked = true;
+			afternoon.checked = true;
+			break;
+		case "b":
+			morning.checked = true;
+			lunch.checked = true;
+			break;
+		case "c":
+			morning.checked = true;
+			break;
+		case "d":
+			lunch.checked = true;
+			afternoon.checked = true;
+			break;
+		case "e":
+			afternoon.checked = true;
+			break;
+	}
 }
 
 function setupButton(){
@@ -59,7 +94,7 @@ function getBody(){
 
 	let myBody = {"name" : getValueByID("nameInput"),
 				"parents": getValueByID("parentsInput"),
-				"present": getValueByID("presentsInput"),
+				"present": getPresents(),
 				"birthday": getValueByID("birthdayInput"),
 				"eating": getValueByID("eatingInput"),
 				"sleeping": getValueByID("sleepingInput"),
@@ -67,6 +102,35 @@ function getBody(){
 				"important": getValueByID("importantInput"),
 				"id": data["id"]}
 	return JSON.stringify(myBody);
+}
+
+function getPresents(){
+	let returnCode = "";
+	returnCode += getDayCode("Montag");
+	returnCode += getDayCode("Dienstag");
+	returnCode += getDayCode("Mittwoch");
+	returnCode += getDayCode("Donnerstag");
+	returnCode += getDayCode("Freitag");
+	return returnCode;
+}
+
+function getDayCode(day){
+	let morning = document.getElementById('morning' + day);
+	let lunch = document.getElementById('lunch' + day);
+	let afternoon = document.getElementById('afternoon' + day);
+
+	if (morning.checked && lunch.checked && afternoon.checked){
+		return "a";
+	} else if (morning.checked && lunch.checked && !afternoon.checked){
+		return "b";
+	} else if (morning.checked && !lunch.checked && !afternoon.checked){
+		return "c";
+	} else if (!morning.checked && lunch.checked && afternoon.checked){
+		return "d";
+	} else if (!morning.checked && !lunch.checked && afternoon.checked){
+		return "e";
+	} 
+	return "f";
 }
 
 function sendPost(payload){
