@@ -134,7 +134,7 @@ function getDayCode(day){
 }
 
 function sendPost(payload){
-	fetch("http://192.168.1.120:5000/kid/none", {
+	fetch(baseUrl + "/kid/none", {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json"
